@@ -24,8 +24,8 @@ const Footer = () => {
                     <h4>Contact Info</h4>
                     <p>123 Mandala Street, Design District</p>
                     <p>Kathmandu, Nepal</p>
-                    <p>Email: hello@mandala.com</p>
-                    <p>Phone: +977 9800000000</p>
+                    <p>Email: rajkumarranamagar23@gmail.com</p>
+                    <p>Phone: +977 9841049414</p>
                 </div>
 
                 <div className="footer-section">
