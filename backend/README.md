@@ -1,20 +1,50 @@
-# Mandala Authentication Backend
+# Mandala Authentication Backend - MySQL
 
-Admin-only authentication system with JWT tokens and MongoDB.
+Admin-only authentication system with JWT tokens and MySQL database.
 
 ## Features
 
 - ✅ Admin authentication with JWT tokens
 - ✅ Password hashing with bcrypt
 - ✅ Protected admin routes
-- ✅ MongoDB database
+- ✅ MySQL database with Sequelize ORM
 - ✅ Express.js REST API
 - ✅ No public signup - admin accounts created via script
 
 ## Prerequisites
 
 - Node.js (v16 or higher)
-- MongoDB (running locally or MongoDB Atlas)
+- **MySQL Server** (v5.7 or higher)
+
+## MySQL Setup
+
+### 1. Install MySQL
+
+If you don't have MySQL installed:
+- **Windows**: Download from [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
+- **Mac**: `brew install mysql`
+- **Linux**: `sudo apt-get install mysql-server`
+
+### 2. Start MySQL Service
+
+- **Windows**: MySQL should start automatically, or use Services app
+- **Mac**: `brew services start mysql`
+- **Linux**: `sudo systemctl start mysql`
+
+### 3. Create Database
+
+Login to MySQL and create the database:
+
+```bash
+mysql -u root -p
+```
+
+Then run:
+
+```sql
+CREATE DATABASE mandala_auth;
+exit;
+```
 
 ## Installation
 
@@ -25,9 +55,16 @@ npm install
 
 2. Configure environment variables:
    - Copy `.env.example` to `.env`
-   - Update the values as needed (especially `MONGODB_URI` and `JWT_SECRET`)
+   - Update the MySQL credentials:
+     ```
+     DB_HOST=localhost
+     DB_PORT=3306
+     DB_NAME=mandala_auth
+     DB_USER=root
+     DB_PASSWORD=your_mysql_password
+     ```
 
-3. Make sure MongoDB is running locally or update `MONGODB_URI` in `.env` to point to your MongoDB instance
+3. The database tables will be created automatically when you start the server
 
 ## Running the Server
 
@@ -41,13 +78,18 @@ Production mode:
 npm start
 ```
 
-The server will start on `http://localhost:5000`
+The server will:
+1. Connect to MySQL
+2. Create the `users` table automatically
+3. Start on `http://localhost:5000`
 
 ## Creating Admin Users
 
 Since there is no public signup page, admin users must be created using the provided script:
 
-1. Edit `createAdmin.js` and update the admin details:
+1. Make sure the server has run at least once (to create tables)
+
+2. Edit `createAdmin.js` and update the admin details:
 ```javascript
 const adminData = {
   name: 'Admin User',
@@ -57,32 +99,18 @@ const adminData = {
 };
 ```
 
-2. Run the script:
+3. Run the script:
 ```bash
 node createAdmin.js
 ```
 
-3. The admin can now login at the frontend login page
+4. The admin can now login at the frontend login page
 
 **Note:** You can run this script multiple times with different email addresses to create multiple admin accounts.
-
 
 ## API Endpoints
 
 ### Authentication Routes
-
-#### Register User
-```
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "password123",
-  "role": "user"  // or "admin"
-}
-```
 
 #### Login
 ```
@@ -90,8 +118,8 @@ POST /api/auth/login
 Content-Type: application/json
 
 {
-  "email": "john@example.com",
-  "password": "password123"
+  "email": "admin@mandala.com",
+  "password": "admin123"
 }
 ```
 
@@ -115,34 +143,47 @@ GET /api/admin/dashboard
 Authorization: Bearer <admin_token>
 ```
 
+Response:
+```json
+{
+  "success": true,
+  "data": {
+    "totalUsers": 5,
+    "totalAdmins": 2,
+    "totalRegularUsers": 3,
+    "message": "Welcome to Admin Dashboard"
+  }
+}
+```
+
 #### Get All Users
 ```
 GET /api/admin/users
 Authorization: Bearer <admin_token>
 ```
 
-### User Routes (User/Admin)
+## Database Schema
 
-#### Get User Dashboard
-```
-GET /api/user/dashboard
-Authorization: Bearer <token>
-```
+### Users Table
 
-#### Get User Profile
-```
-GET /api/user/profile
-Authorization: Bearer <token>
-```
+| Column | Type | Description |
+|--------|------|-------------|
+| id | INT (PK, Auto Increment) | User ID |
+| name | VARCHAR(50) | User's full name |
+| email | VARCHAR(100) | Unique email address |
+| password | VARCHAR(255) | Hashed password |
+| role | ENUM('user', 'admin') | User role |
+| createdAt | DATETIME | Creation timestamp |
+| updatedAt | DATETIME | Last update timestamp |
 
 ## Project Structure
 
 ```
 backend/
 ├── config/
-│   └── db.js              # Database connection
+│   └── db.js              # MySQL/Sequelize connection
 ├── models/
-│   └── User.js            # User model
+│   └── User.js            # User model (Sequelize)
 ├── controllers/
 │   └── authController.js  # Auth logic
 ├── middleware/
@@ -153,20 +194,31 @@ backend/
 │   ├── adminRoutes.js     # Admin endpoints
 │   └── userRoutes.js      # User endpoints
 ├── .env                   # Environment variables
+├── createAdmin.js         # Admin creation script
 ├── server.js              # Express server
 └── package.json           # Dependencies
 ```
 
-## Testing
+## Troubleshooting
 
-You can test the API using curl, Postman, or any HTTP client.
+### MySQL Connection Error
 
-Example: Register a new user
+If you see "Access denied for user":
+1. Check your MySQL username and password in `.env`
+2. Make sure MySQL service is running
+3. Verify the database exists: `SHOW DATABASES;`
+
+### Database Not Found
+
+If you see "Unknown database":
 ```bash
-curl -X POST http://localhost:5000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test User","email":"test@example.com","password":"password123","role":"user"}'
+mysql -u root -p
+CREATE DATABASE mandala_auth;
 ```
+
+### Port Already in Use
+
+If port 5000 is busy, change `PORT` in `.env` file
 
 ## Security Notes
 
@@ -174,6 +226,7 @@ curl -X POST http://localhost:5000/api/auth/register \
 - Never commit `.env` file to version control
 - Use HTTPS in production
 - Implement rate limiting for production use
+- Use strong MySQL passwords
 - Consider adding refresh tokens for better security
 
 ## License
