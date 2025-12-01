@@ -1,16 +1,15 @@
 # Mandala Authentication Backend
 
-Complete Node.js authentication system with JWT tokens, MongoDB, and role-based access control.
+Admin-only authentication system with JWT tokens and MongoDB.
 
 ## Features
 
-- ✅ User registration and login
-- ✅ JWT token authentication
-- ✅ Role-based access control (Admin/User)
+- ✅ Admin authentication with JWT tokens
 - ✅ Password hashing with bcrypt
-- ✅ Protected routes
+- ✅ Protected admin routes
 - ✅ MongoDB database
 - ✅ Express.js REST API
+- ✅ No public signup - admin accounts created via script
 
 ## Prerequisites
 
@@ -43,6 +42,30 @@ npm start
 ```
 
 The server will start on `http://localhost:5000`
+
+## Creating Admin Users
+
+Since there is no public signup page, admin users must be created using the provided script:
+
+1. Edit `createAdmin.js` and update the admin details:
+```javascript
+const adminData = {
+  name: 'Admin User',
+  email: 'admin@mandala.com',
+  password: 'admin123',  // Change this!
+  role: 'admin'
+};
+```
+
+2. Run the script:
+```bash
+node createAdmin.js
+```
+
+3. The admin can now login at the frontend login page
+
+**Note:** You can run this script multiple times with different email addresses to create multiple admin accounts.
+
 
 ## API Endpoints
 
