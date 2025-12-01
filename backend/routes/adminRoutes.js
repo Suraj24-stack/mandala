@@ -14,9 +14,9 @@ router.use(authorize('admin'));
 // @access  Private/Admin
 router.get('/dashboard', async (req, res) => {
     try {
-        const totalUsers = await User.countDocuments();
-        const totalAdmins = await User.countDocuments({ role: 'admin' });
-        const totalRegularUsers = await User.countDocuments({ role: 'user' });
+        const totalUsers = await User.count();
+        const totalAdmins = await User.count({ where: { role: 'admin' } });
+        const totalRegularUsers = await User.count({ where: { role: 'user' } });
 
         res.status(200).json({
             success: true,
@@ -41,7 +41,9 @@ router.get('/dashboard', async (req, res) => {
 // @access  Private/Admin
 router.get('/users', async (req, res) => {
     try {
-        const users = await User.find().select('-password');
+        const users = await User.findAll({
+            attributes: { exclude: ['password'] }
+        });
 
         res.status(200).json({
             success: true,

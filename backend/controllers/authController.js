@@ -18,7 +18,7 @@ export const register = async (req, res) => {
 
     try {
         // Check if user already exists
-        let user = await User.findOne({ email });
+        let user = await User.findOne({ where: { email } });
 
         if (user) {
             return res.status(400).json({
@@ -27,7 +27,7 @@ export const register = async (req, res) => {
             });
         }
 
-        // Create user
+        // Create user (password will be hashed automatically by beforeCreate hook)
         user = await User.create({
             name,
             email,
@@ -42,7 +42,7 @@ export const register = async (req, res) => {
             success: true,
             token,
             user: {
-                id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role
@@ -73,8 +73,11 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Check if user exists
-        const user = await User.findOne({ email }).select('+password');
+        // Check if user exists (include password for comparison)
+        const user = await User.findOne({
+            where: { email },
+            attributes: { include: ['password'] }
+        });
 
         if (!user) {
             return res.status(401).json({
@@ -100,7 +103,7 @@ export const login = async (req, res) => {
             success: true,
             token,
             user: {
-                id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role
@@ -120,12 +123,12 @@ export const login = async (req, res) => {
 // @access  Private
 export const getMe = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id);
+        const user = await User.findByPk(req.user.id);
 
         res.status(200).json({
             success: true,
             user: {
-                id: user._id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role
