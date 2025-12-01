@@ -8,6 +8,7 @@ import Product from './pages/Product';
 import ProductDetail from './pages/productDetail';
 import Contact from './pages/Contact';
 import Inquiry from './pages/Inquiry';
+import AdminDashboard from './pages/AdminDashboard';
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/inquiry" element={<Inquiry />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
       <Footer />
     </Router>
