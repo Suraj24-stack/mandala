@@ -13,6 +13,17 @@ import painting8 from '../assets/paintings/painting8.png';
 gsap.registerPlugin(useGSAP);
 
 const Homepage = () => {
+    const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+    const heroImages = [painting4, painting5, painting6, painting8];
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+        }, 5000); // Change image every 5 seconds
+
+        return () => clearInterval(interval);
+    }, [heroImages.length]);
+
     useGSAP(() => {
         gsap.from('.hero-title', { opacity: 0, y: 50, duration: 1, delay: 0.5 });
         gsap.from('.hero-subtitle', { opacity: 0, y: 30, duration: 1, delay: 0.8 });
@@ -21,7 +32,13 @@ const Homepage = () => {
 
     return (
         <div className="page-container">
-            <section className="hero-section" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${painting4})` }}>
+            <section
+                className="hero-section"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${heroImages[currentImageIndex]})`,
+                    transition: 'background-image 1s ease-in-out'
+                }}
+            >
                 <h1 className="hero-title">Sacred Art of the Himalayas</h1>
                 <p className="hero-subtitle">Discover the spiritual depth of ancient Thangka paintings</p>
                 <Link to="/product" className="btn-primary">View Collection</Link>
