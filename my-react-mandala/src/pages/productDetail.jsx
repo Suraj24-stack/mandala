@@ -4,6 +4,10 @@ import painting1 from '../assets/paintings/painting1.jpg';
 import painting2 from '../assets/paintings/painting2.jpg';
 import painting3 from '../assets/paintings/painting3.jpg';
 import painting4 from '../assets/paintings/painting4.jpg';
+import painting5 from '../assets/paintings/painting5.png';
+import painting6 from '../assets/paintings/painting6.png';
+import painting7 from '../assets/paintings/painting7.png';
+import painting8 from '../assets/paintings/painting8.png';
 
 const products = [
     {
@@ -33,6 +37,34 @@ const products = [
         image: painting4,
         description: 'White Tara is associated with compassion, long life, healing, and serenity. She is depicted with seven eyes—on her palms, soles, and forehead—symbolizing her watchfulness over all beings. This painting radiates peace and spiritual purity.',
         specs: ['Material: Cotton Canvas', 'Pigments: Gold & Mineral', 'Theme: Longevity & Healing', 'Dimensions: 50cm x 70cm']
+    },
+    {
+        id: 5,
+        name: 'Mandala of Compassion',
+        image: painting5,
+        description: 'A mesmerizing Mandala of Compassion (Chenrezig). The intricate geometric patterns represent the cosmos and the pure land of the Buddha. This Thangka is perfect for meditation and bringing harmonious energy to any space.',
+        specs: ['Material: Cotton Canvas', 'Pigments: 24K Gold & Minerals', 'Style: Mandala', 'Dimensions: 50cm x 50cm']
+    },
+    {
+        id: 6,
+        name: 'Wheel of Life',
+        image: painting6,
+        description: 'The Bhavachakra or Wheel of Life is a complex symbolic representation of samsara (cyclic existence). It illustrates the six realms of existence, the three poisons, and the twelve links of dependent origination. A profound educational and spiritual masterpiece.',
+        specs: ['Material: Aged Cotton', 'Pigments: Natural Earth Colors', 'Style: Traditional', 'Dimensions: 60cm x 80cm']
+    },
+    {
+        id: 7,
+        name: 'Life of Buddha',
+        image: painting7,
+        description: 'This narrative Thangka beautifully illustrates the twelve major deeds of Shakyamuni Buddha, from his birth in Lumbini to his Parinirvana. Each scene is delicately painted with soft colors and fine gold lines, telling the story of enlightenment.',
+        specs: ['Material: Fine Cotton', 'Pigments: Stone Colors & Gold', 'Theme: Narrative', 'Dimensions: 70cm x 100cm']
+    },
+    {
+        id: 8,
+        name: 'Manjushri',
+        image: painting8,
+        description: 'Manjushri is the Bodhisattva of Great Wisdom. He is depicted holding a flaming sword in his right hand to cut through ignorance and a lotus flower supporting the Prajnaparamita sutra in his left. This painting inspires clarity, intelligence, and insight.',
+        specs: ['Material: Cotton Canvas', 'Pigments: Mineral & Gold', 'Deity: Manjushri', 'Dimensions: 45cm x 60cm']
     }
 ];
 

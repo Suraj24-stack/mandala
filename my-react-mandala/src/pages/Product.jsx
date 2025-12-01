@@ -4,6 +4,10 @@ import painting1 from '../assets/paintings/painting1.jpg';
 import painting2 from '../assets/paintings/painting2.jpg';
 import painting3 from '../assets/paintings/painting3.jpg';
 import painting4 from '../assets/paintings/painting4.jpg';
+import painting5 from '../assets/paintings/painting5.png';
+import painting6 from '../assets/paintings/painting6.png';
+import painting7 from '../assets/paintings/painting7.png';
+import painting8 from '../assets/paintings/painting8.png';
 
 const products = [
     {
@@ -29,6 +33,30 @@ const products = [
         name: 'White Tara',
         image: painting4,
         description: 'Serene White Tara, representing compassion and longevity.'
+    },
+    {
+        id: 5,
+        name: 'Mandala of Compassion',
+        image: painting5,
+        description: 'A highly detailed geometric Mandala representing the universe and compassion.'
+    },
+    {
+        id: 6,
+        name: 'Wheel of Life',
+        image: painting6,
+        description: 'Traditional Bhavachakra depicting the cycle of existence and samsara.'
+    },
+    {
+        id: 7,
+        name: 'Life of Buddha',
+        image: painting7,
+        description: 'Narrative Thangka illustrating key moments from the life of Siddhartha Gautama.'
+    },
+    {
+        id: 8,
+        name: 'Manjushri',
+        image: painting8,
+        description: 'The Bodhisattva of Wisdom, wielding the flaming sword of insight.'
     }
 ];
 
