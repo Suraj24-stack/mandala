@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
@@ -11,7 +11,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const { login } = useAuth();
+    const { login, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -29,11 +29,12 @@ const Login = () => {
         const result = await login(formData.email, formData.password);
 
         if (result.success) {
-            // Redirect based on role
+            // Only allow admin login
             if (result.user.role === 'admin') {
                 navigate('/admin/dashboard');
             } else {
-                navigate('/user/dashboard');
+                setError('Access denied. Admin login only.');
+                await logout();
             }
         } else {
             setError(result.message);
@@ -46,8 +47,8 @@ const Login = () => {
         <div className="login-container">
             <div className="login-card">
                 <div className="login-header">
-                    <h1>Welcome Back</h1>
-                    <p>Sign in to continue to your account</p>
+                    <h1>Admin Login</h1>
+                    <p>Sign in to access admin dashboard</p>
                 </div>
 
                 {error && <div className="error-message">{error}</div>}
@@ -61,7 +62,7 @@ const Login = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="Enter your email"
+                            placeholder="Enter admin email"
                             required
                         />
                     </div>
@@ -74,21 +75,15 @@ const Login = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            placeholder="Enter your password"
+                            placeholder="Enter password"
                             required
                         />
                     </div>
 
                     <button type="submit" className="login-btn" disabled={loading}>
-                        {loading ? 'Signing in...' : 'Sign In'}
+                        {loading ? 'Signing in...' : 'Admin Sign In'}
                     </button>
                 </form>
-
-                <div className="login-footer">
-                    <p>
-                        Don't have an account? <Link to="/signup">Sign up</Link>
-                    </p>
-                </div>
             </div>
         </div>
     );

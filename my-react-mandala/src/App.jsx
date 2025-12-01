@@ -11,9 +11,7 @@ import ProductDetail from './pages/productDetail';
 import Contact from './pages/Contact';
 import Inquiry from './pages/Inquiry';
 import Login from './login/Loginpage';
-import Signup from './Signup/Signup';
 import AdminDashboard from './pages/AdminDashboard';
-import UserDashboard from './pages/UserDashboard';
 
 
 export default function App() {
@@ -29,22 +27,13 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
 
-          {/* Protected Routes */}
+          {/* Protected Admin Route */}
           <Route
             path="/admin/dashboard"
             element={
               <ProtectedRoute requiredRole="admin">
                 <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/dashboard"
-            element={
-              <ProtectedRoute>
-                <UserDashboard />
               </ProtectedRoute>
             }
           />

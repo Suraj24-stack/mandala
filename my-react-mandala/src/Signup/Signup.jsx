@@ -8,8 +8,7 @@ const Signup = () => {
         name: '',
         email: '',
         password: '',
-        confirmPassword: '',
-        role: 'user'
+        confirmPassword: ''
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -41,20 +40,17 @@ const Signup = () => {
 
         setLoading(true);
 
+        // Always register as 'user' role
         const result = await register(
             formData.name,
             formData.email,
             formData.password,
-            formData.role
+            'user'
         );
 
         if (result.success) {
-            // Redirect based on role
-            if (formData.role === 'admin') {
-                navigate('/admin/dashboard');
-            } else {
-                navigate('/user/dashboard');
-            }
+            // Redirect to user dashboard
+            navigate('/user/dashboard');
         } else {
             setError(result.message);
         }
@@ -125,19 +121,7 @@ const Signup = () => {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="role">Account Type</label>
-                        <select
-                            id="role"
-                            name="role"
-                            value={formData.role}
-                            onChange={handleChange}
-                            className="role-select"
-                        >
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
+
 
                     <button type="submit" className="signup-btn" disabled={loading}>
                         {loading ? 'Creating Account...' : 'Sign Up'}
