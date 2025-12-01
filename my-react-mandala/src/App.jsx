@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Homepage from './pages/Homepage';
 import Product from './pages/Product';
 import ProductDetail from './pages/productDetail';
 import Contact from './pages/Contact';
+import Inquiry from './pages/Inquiry';
 
 export default function App() {
   return (
@@ -15,7 +17,9 @@ export default function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/inquiry" element={<Inquiry />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

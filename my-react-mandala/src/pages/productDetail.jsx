@@ -96,7 +96,13 @@ const ProductDetail = () => {
                         ))}
                     </ul>
 
-                    <Link to="/contact" className="btn-primary" style={{ width: '100%', display: 'inline-block', textAlign: 'center' }}>
+
+                    <Link
+                        to="/inquiry"
+                        state={{ productName: product.name }}
+                        className="btn-primary"
+                        style={{ width: '100%', display: 'inline-block', textAlign: 'center' }}
+                    >
                         Inquire About This Product
                     </Link>
                     {/* Price is intentionally omitted */}
