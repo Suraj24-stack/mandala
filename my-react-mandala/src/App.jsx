@@ -1,45 +1,21 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Homepage from './pages/Homepage';
+import Product from './pages/Product';
+import ProductDetail from './pages/productDetail';
+import Contact from './pages/Contact';
 
-import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-export default function Scroll() {
-  const main = useRef();
-
-  useGSAP(
-    () => {
-      const boxes = gsap.utils.toArray('.box');
-      boxes.forEach((box) => {
-        gsap.to(box, {
-          x: 150,
-          scrollTrigger: {
-            trigger: box,
-            start: 'bottom bottom',
-            end: 'top 20%',
-            scrub: true,
-            // markers: true,
-          },
-        });
-      });
-    },
-    { scope: main }
-  );
-
+export default function App() {
   return (
-    <div>
-      <section className="section flex-center column">
-        <h2>Basic ScrollTrigger with React</h2>
-        <p>Scroll down to see the magic happen!!</p>
-      </section>
-      <div className="section flex-center column" ref={main}>
-        <div className="box gradient-blue">box</div>
-        <div className="box gradient-blue">box</div>
-        <div className="box gradient-blue">box</div>
-      </div>
-      <section className="section"></section>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/product" element={<Product />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Router>
   );
 }
