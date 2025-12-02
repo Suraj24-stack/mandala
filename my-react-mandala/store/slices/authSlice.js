@@ -1,8 +1,6 @@
-
-
 // store/slices/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../../src/lib/apiClient";
+import { api } from "../../../lib/api";
 
 // Initialize API token from localStorage immediately
 if (typeof window !== "undefined") {
@@ -17,7 +15,7 @@ export const loginUser = createAsyncThunk(
     "auth/loginUser",
     async (credentials, { rejectWithValue }) => {
         try {
-            const data = await api.post("/users/login", credentials);
+            const data = await api.post("/auth/login", credentials);
 
             // Store token in localStorage
             if (typeof window !== "undefined" && data.token) {
@@ -39,7 +37,7 @@ export const registerUser = createAsyncThunk(
     "auth/registerUser",
     async (userData, { rejectWithValue }) => {
         try {
-            const data = await api.post("/users", userData);
+            const data = await api.post("/auth/register", userData);
 
             // Don't store token or log user in automatically if email verification is required
             // Only store token if email is already verified (edge case)

@@ -10,9 +10,8 @@ import Product from './pages/Product';
 import ProductDetail from './pages/productDetail';
 import Contact from './pages/Contact';
 import Inquiry from './pages/Inquiry';
-import Login from './login/login';
 import Dashboard from './dashboard/Dashboard';
-
+import Login from './pages/login';
 
 export default function App() {
   return (

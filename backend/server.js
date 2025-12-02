@@ -72,7 +72,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Import routes
 import userRoutes from './routes/userRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
+
 // import hostRoute from "./routes/hostRoute.js"; // Commented out as it might not exist or be converted yet
 
 
@@ -110,8 +110,8 @@ app.get("/health", (req, res) => {
 
 // Mount user routes under /api prefix
 app.use("/api/users", userRoutes);
-app.use("/api/admin", adminRoutes);
-// app.use("/api/hosts", hostRoute);
+
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
