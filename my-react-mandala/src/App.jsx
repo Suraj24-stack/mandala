@@ -10,8 +10,8 @@ import Product from './pages/Product';
 import ProductDetail from './pages/productDetail';
 import Contact from './pages/Contact';
 import Inquiry from './pages/Inquiry';
-import Login from './login/Loginpage';
-import AdminDashboard from './pages/AdminDashboard';
+import Login from './login/login';
+import Dashboard from './dashboard/Dashboard';
 
 
 export default function App() {
@@ -28,12 +28,12 @@ export default function App() {
           <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/login" element={<Login />} />
 
-          {/* Protected Admin Route */}
+          {/* Protected Admin Dashboard Route */}
           <Route
-            path="/admin/dashboard"
+            path="/Dashboard"
             element={
               <ProtectedRoute requiredRole="admin">
-                <AdminDashboard />
+                <Dashboard />
               </ProtectedRoute>
             }
           />

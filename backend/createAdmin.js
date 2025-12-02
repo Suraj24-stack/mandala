@@ -1,8 +1,8 @@
 // Script to create an admin user directly in the database
 // Run this with: node createAdmin.js
 
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import { sequelize } from './config/db.js';
 import User from './models/User.js';
 
 dotenv.config();
@@ -10,8 +10,11 @@ dotenv.config();
 const createAdmin = async () => {
     try {
         // Connect to database
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
+        await sequelize.authenticate();
+        console.log('Connected to MySQL');
+
+        // Sync User model
+        await sequelize.sync();
 
         // Admin details - CHANGE THESE VALUES
         const adminData = {
@@ -22,13 +25,13 @@ const createAdmin = async () => {
         };
 
         // Check if admin already exists
-        const existingAdmin = await User.findOne({ email: adminData.email });
+        const existingAdmin = await User.findOne({ where: { email: adminData.email } });
         if (existingAdmin) {
             console.log('Admin user already exists with this email');
             process.exit(0);
         }
 
-        // Create admin user
+        // Create admin user (password will be hashed automatically)
         const admin = await User.create(adminData);
         console.log('Admin user created successfully!');
         console.log('Email:', admin.email);
