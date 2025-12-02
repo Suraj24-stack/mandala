@@ -1,61 +1,65 @@
+// routes/users.js
 import express from 'express';
-import { protect } from '../middleware/auth.js';
-import { authorize } from '../middleware/roleAuth.js';
+import { authenticateToken, requireAdmin } from '../middleware/auth.js';
+import {
+    createUser,
+    login,
+    getUsers,
+    getUserById,
+    getProfile,
+    updateProfile,
+    updateUserRole,
+    changePassword,
+    resetUserPassword,
+    deleteUser,
+    getUserStats,
+} from '../controllers/userController.js';
 
 const router = express.Router();
 
-// All routes are protected and require user role
-router.use(protect);
-router.use(authorize('user', 'admin')); // Both user and admin can access
+// ========================================
+// PUBLIC ROUTES (No Authentication Required)
+// ========================================
 
-// @desc    Get user dashboard data
-// @route   GET /api/user/dashboard
-// @access  Private/User
-router.get('/dashboard', async (req, res) => {
-    try {
-        res.status(200).json({
-            success: true,
-            data: {
-                message: 'Welcome to User Dashboard',
-                user: {
-                    id: req.user._id,
-                    name: req.user.name,
-                    email: req.user.email,
-                    role: req.user.role
-                }
-            }
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error'
-        });
-    }
-});
+// POST /users/login - User login
+router.post('/login', login);
 
-// @desc    Get user profile
-// @route   GET /api/user/profile
-// @access  Private/User
-router.get('/profile', async (req, res) => {
-    try {
-        res.status(200).json({
-            success: true,
-            data: {
-                id: req.user._id,
-                name: req.user.name,
-                email: req.user.email,
-                role: req.user.role,
-                createdAt: req.user.createdAt
-            }
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error'
-        });
-    }
-});
+// POST /users - Create new user (can be public for registration or admin-only)
+router.post('/', createUser);
+
+// ========================================
+// USER-SPECIFIC ROUTES (Must come before /:id routes)
+// ========================================
+
+// GET /users/profile - Get current user profile
+router.get('/profile', authenticateToken, getProfile);
+
+// PUT /users/profile - Update current user profile
+router.put('/profile', authenticateToken, updateProfile);
+
+// PUT /users/change-password - Change current user password
+router.put('/change-password', authenticateToken, changePassword);
+
+// GET /users/stats - Get user statistics (admin only)
+router.get('/stats', authenticateToken, requireAdmin, getUserStats);
+
+// ========================================
+// ADMIN-ONLY ROUTES
+// ========================================
+
+// GET /users - Get all users with pagination and search (admin only)
+router.get('/', authenticateToken, requireAdmin, getUsers);
+
+// GET /users/:id - Get user by ID (admin only)
+router.get('/:id', authenticateToken, requireAdmin, getUserById);
+
+// PUT /users/:id/role - Update user role (admin only)
+router.put('/:id/role', authenticateToken, requireAdmin, updateUserRole);
+
+// PUT /users/:id/reset-password - Reset user password (admin only)
+router.put('/:id/reset-password', authenticateToken, requireAdmin, resetUserPassword);
+
+// DELETE /users/:id - Delete user (admin only)
+router.delete('/:id', authenticateToken, requireAdmin, deleteUser);
 
 export default router;

@@ -1,39 +1,28 @@
-import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+import mysql from 'mysql2/promise';
 
 dotenv.config();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 3306,
-    dialect: 'mysql',
-    logging: false, // Set to console.log to see SQL queries
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
-  }
-);
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "mandala_db",
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  charset: 'utf8mb4',
+  timezone: '+00:00'
+});
 
-const connectDB = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log(`MySQL Connected: ${process.env.DB_HOST}`);
+pool.getConnection()
+  .then(conn => {
+    console.log("✅ Database connected successfully");
+    conn.release();
+  })
+  .catch(err => {
+    console.error("❌ Database connection failed:", err.message);
+  });
 
-    // Sync all models with database
-    await sequelize.sync({ alter: false }); // Use { force: true } to drop tables on restart
-    console.log('Database synchronized');
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-
-export { sequelize, connectDB };
-export default connectDB;
+export default pool;
