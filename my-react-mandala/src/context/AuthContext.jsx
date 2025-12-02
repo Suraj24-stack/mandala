@@ -32,8 +32,8 @@ export const AuthProvider = ({ children }) => {
         const loadUser = async () => {
             if (token) {
                 try {
-                    const response = await axios.get(`${API_URL}/auth/me`);
-                    setUser(response.data.user);
+                    const response = await axios.get(`${API_URL}/users/profile`);
+                    setUser(response.data.data);
                 } catch (error) {
                     console.error('Failed to load user:', error);
                     localStorage.removeItem('token');
@@ -49,17 +49,17 @@ export const AuthProvider = ({ children }) => {
     // Register function
     const register = async (name, email, password, role = 'user') => {
         try {
-            const response = await axios.post(`${API_URL}/auth/register`, {
+            const response = await axios.post(`${API_URL}/users`, {
                 name,
                 email,
                 password,
                 role
             });
 
-            const { token: newToken, user: newUser } = response.data;
-            localStorage.setItem('token', newToken);
-            setToken(newToken);
-            setUser(newUser);
+            // After registration, log the user in
+            if (response.data.success) {
+                return await login(email, password);
+            }
 
             return { success: true };
         } catch (error) {
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     // Login function
     const login = async (email, password) => {
         try {
-            const response = await axios.post(`${API_URL}/auth/login`, {
+            const response = await axios.post(`${API_URL}/users/login`, {
                 email,
                 password
             });
@@ -94,15 +94,10 @@ export const AuthProvider = ({ children }) => {
 
     // Logout function
     const logout = async () => {
-        try {
-            await axios.post(`${API_URL}/auth/logout`);
-        } catch (error) {
-            console.error('Logout error:', error);
-        } finally {
-            localStorage.removeItem('token');
-            setToken(null);
-            setUser(null);
-        }
+        // No logout endpoint in backend, just clear local state
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
     };
 
     const value = {

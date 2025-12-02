@@ -10,7 +10,8 @@ import Product from "./pages/Product";
 import ProductDetail from "./pages/productDetail";
 import Contact from "./pages/Contact";
 import Inquiry from "./pages/Inquiry";
-import Login from "./pages/login";
+import Login from "./login/Login";
+import Signup from "./Signup/Signup";
 import AdminDashboard from "./dashboard/Dashboard";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/inquiry" element={<Inquiry />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
 
               {/* Protected Admin Route */}
               <Route
