@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--heritage-cream) 0%, #fff 100%);
   padding: 20px;
 }
 
@@ -14,7 +14,8 @@
   padding: 40px;
   width: 100%;
   max-width: 450px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid var(--heritage-dark-red);
   animation: slideUp 0.5s ease-out;
 }
 
@@ -23,6 +24,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -36,9 +38,10 @@
 
 .login-header h1 {
   font-size: 2rem;
-  color: #333;
+  color: var(--heritage-dark-red);
   margin-bottom: 10px;
   font-weight: 700;
+  font-family: 'Playfair Display', serif;
 }
 
 .login-header p {
@@ -48,12 +51,12 @@
 
 .error-message {
   background: #fee;
-  color: #c33;
+  color: var(--heritage-dark-red);
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 20px;
   font-size: 0.9rem;
-  border-left: 4px solid #c33;
+  border-left: 4px solid var(--heritage-dark-red);
 }
 
 .login-form {
@@ -70,7 +73,7 @@
 
 .form-group label {
   font-weight: 600;
-  color: #333;
+  color: var(--heritage-charcoal);
   font-size: 0.9rem;
 }
 
@@ -85,13 +88,13 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--heritage-blue);
+  box-shadow: 0 0 0 3px rgba(0, 56, 147, 0.1);
 }
 
 .login-btn {
   padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--heritage-blue);
   color: white;
   border: none;
   border-radius: 10px;
@@ -104,7 +107,8 @@
 
 .login-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 56, 147, 0.4);
+  background: #002a70;
 }
 
 .login-btn:disabled {
@@ -125,12 +129,12 @@
 }
 
 .login-footer a {
-  color: #667eea;
+  color: var(--heritage-blue);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .login-footer a:hover {
-  color: #764ba2;
+  color: var(--heritage-dark-red);
 }

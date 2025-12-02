@@ -31,8 +31,8 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed w-full z-50 transition-all duration-500 ${
         scrolled || isOpen
-          ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-heritage-gold/20 py-3"
-          : "bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm py-6"
+          ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-heritage-blue/20 py-3"
+          : "bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm py-6"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -43,10 +43,10 @@ const Navbar = () => {
           <Link
             to="/"
             className={`text-2xl font-serif font-bold tracking-[0.3em] transition-colors duration-300 ${
-              scrolled ? "text-heritage-charcoal" : "text-white drop-shadow-lg"
+              scrolled ? "text-heritage-dark-red" : "text-white drop-shadow-lg"
             }`}
           >
-            MANDALA
+            RAJKUMAR ARTS
           </Link>
         </motion.div>
 
@@ -65,17 +65,17 @@ const Navbar = () => {
                 className={`text-sm tracking-[0.2em] uppercase transition-all duration-300 relative ${
                   location.pathname === link.path
                     ? scrolled
-                      ? "text-heritage-gold font-semibold"
-                      : "text-heritage-gold font-semibold drop-shadow-lg"
+                      ? "text-heritage-blue font-semibold"
+                      : "text-heritage-blue font-semibold drop-shadow-lg"
                     : scrolled
-                    ? "text-heritage-charcoal hover:text-heritage-gold"
-                    : "text-white/90 hover:text-heritage-gold drop-shadow-md"
+                    ? "text-heritage-charcoal hover:text-heritage-blue"
+                    : "text-white/90 hover:text-heritage-blue drop-shadow-md"
                 }`}
               >
                 {link.label}
                 {/* Animated underline */}
                 <motion.span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-heritage-gold ${
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-heritage-blue ${
                     location.pathname === link.path ? "w-full" : "w-0"
                   } group-hover:w-full transition-all duration-300`}
                 />
@@ -120,7 +120,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/98 backdrop-blur-xl border-t border-heritage-gold/30 overflow-hidden shadow-xl"
+            className="md:hidden bg-white/98 backdrop-blur-xl border-t border-heritage-blue/30 overflow-hidden shadow-xl"
           >
             <motion.div
               initial="closed"
@@ -150,8 +150,8 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className={`text-lg tracking-[0.2em] uppercase transition-colors duration-300 ${
                       location.pathname === link.path
-                        ? "text-heritage-gold font-semibold"
-                        : "text-heritage-charcoal hover:text-heritage-gold"
+                        ? "text-heritage-blue font-semibold"
+                        : "text-heritage-charcoal hover:text-heritage-blue"
                     }`}
                   >
                     {link.label}

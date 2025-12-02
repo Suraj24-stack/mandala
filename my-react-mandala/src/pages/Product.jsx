@@ -189,28 +189,6 @@ const Product = () => {
                 <p className="text-gray-600 text-sm mb-6 line-clamp-2 leading-relaxed">
                   {product.description}
                 </p>
-
-                <div className="flex gap-3 pt-4 border-t border-gray-200">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={(e) => handleContact(e, "email", product.name)}
-                    className="flex-1 px-4 py-3 text-sm uppercase tracking-wider border-2 border-heritage-charcoal text-heritage-charcoal hover:bg-heritage-charcoal hover:text-white transition-all duration-300 rounded-sm font-semibold"
-                  >
-                    Email
-                  </motion.button>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 0 20px rgba(212, 175, 55, 0.5)",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={(e) => handleContact(e, "whatsapp", product.name)}
-                    className="flex-1 px-4 py-3 text-sm uppercase tracking-wider bg-heritage-gold text-white hover:bg-[#b5952f] transition-all duration-300 rounded-sm font-semibold shadow-md hover:shadow-lg"
-                  >
-                    WhatsApp
-                  </motion.button>
-                </div>
               </div>
             </motion.div>
           ))}

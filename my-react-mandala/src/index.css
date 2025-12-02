@@ -2,10 +2,19 @@
 
 :root {
   --heritage-gold: #D4AF37;
-  --heritage-dark-red: #8B0000;
+  --heritage-dark-red: #DC143C;
+  /* Nepal Red */
+  --heritage-blue: #003893;
+  /* Nepal Blue */
   --heritage-cream: #F5F5DC;
   --heritage-charcoal: #36454F;
+  --nepal-red: #DC143C;
+  --nepal-blue: #003893;
   --bg-color: #Fdfbf7;
+}
+
+.page-container {
+  @apply max-w-7xl mx-auto px-6 pt-28 pb-12;
 }
 
 body {
